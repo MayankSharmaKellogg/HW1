@@ -126,3 +126,39 @@
 
 -- The SQL statement for the cast output
 -- TODO!
+
+drop table if exists movies;
+create table movies (
+    movie_id integer primary key autoincrement,
+    movie_title text,
+    year_released integer,
+    mpaa_ratings text,
+    studio_info text
+);
+
+drop table if exists top_cast;
+create table top_cast (
+movie_id integer foreign key,
+model_id integer,
+actor_name text,
+character_name text
+);
+
+
+select distinct movie_title, year_released, mpaa_ratings, studio_name from movies;
+
+select movie_title
+from movies
+where studio_name = ""
+group by 1;
+
+select a.movie_title, b.actor_name, c.character_name 
+from top_case b 
+join movies a on a.movie_id = b.movie_id
+group by 1,2,3;
+
+select a.movie_title, b.actor_name, b.actor_id
+from top_cast b 
+join movies a on a.movie_id = b.movie_id
+where actor_id = <value to be added>
+group by 1,2,3;
