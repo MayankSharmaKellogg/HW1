@@ -138,10 +138,32 @@ create table movies (
 
 drop table if exists top_cast;
 create table top_cast (
-    movie_id integer primary key,
+    movie_id integer,
     actor_name text,
     character_name text
 );
+
+drop table if exists actor;
+create table actor (
+    actor_id integer primary key autoincrement,
+    actor_name text,
+    movie_title text
+);
+
+INSERT INTO actor (actor_name, movie_title)
+    VALUES ("Christian Bale","Batman Begins");
+
+INSERT INTO actor (actor_name, movie_title)
+    VALUES ("Christian Bale","The Dark Knight");
+
+INSERT INTO actor (actor_name, movie_title)
+    VALUES ("Christian Bale","The Dark Knight Rises");
+
+INSERT INTO actor (actor_name, movie_title)
+    VALUES ("Christian Bale","Amsterdam");
+
+INSERT INTO actor (actor_name, movie_title)
+    VALUES ("Christian Bale","Ford vs ferrari");
 
 
 INSERT INTO movies(movie_title, year_released, mpaa_ratings, studio_info)
@@ -149,7 +171,7 @@ INSERT INTO movies(movie_title, year_released, mpaa_ratings, studio_info)
 INSERT INTO movies(movie_title, year_released, mpaa_ratings, studio_info) 
    VALUES ("The Dark Knight", 2008,"PG-13","Warner Bros.");
 INSERT INTO movies(movie_title, year_released, mpaa_ratings, studio_info) 
-   Values ("The Dark Knight Rises", 2012,"PG-13","Warner Bros.");
+   VALUES ("The Dark Knight Rises", 2012,"PG-13","Warner Bros.");
 
 INSERT INTO top_cast (movie_id, actor_name,character_name)
     VALUES (1, "Christian Bale", "Bruce Wayne");
@@ -193,9 +215,21 @@ INSERT INTO top_cast (movie_id, actor_name,character_name)
 INSERT INTO top_cast (movie_id, actor_name,character_name)
     VALUES (3, "Anne Hathaway", "Selina Kyle");
 
-
+-- Prints a header for the movies output
+.print "Movies"
+.print "======"
+.print ""
 select * from movies;
+
+-- Prints a header for the cast output
+.print ""
+.print "Top Cast"
+.print "========"
+.print ""
 
 select movies.movie_title, top_cast.actor_name, top_cast.character_name 
 from movies inner join top_cast 
 on movies.movie_id = top_cast.movie_id;
+
+
+
