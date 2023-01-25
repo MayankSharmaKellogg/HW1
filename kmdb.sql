@@ -109,23 +109,6 @@
 -- Use hard-coded foreign key IDs when necessary
 -- TODO!
 
--- Prints a header for the movies output
-.print "Movies"
-.print "======"
-.print ""
-
--- The SQL statement for the movies output
--- TODO!
-
--- Prints a header for the cast output
-.print ""
-.print "Top Cast"
-.print "========"
-.print ""
-
-
--- The SQL statement for the cast output
--- TODO!
 
 drop table if exists movies;
 create table movies (
@@ -147,40 +130,70 @@ drop table if exists actor;
 create table actor (
     actor_id integer primary key autoincrement,
     actor_name text,
-    movie_title text
+    movie_title text,
+    no_of_movies_done integer
 );
 
-INSERT INTO actor (actor_name, movie_title)
-    VALUES ("Christian Bale","Batman Begins");
+INSERT INTO actor (actor_name, movie_title, no_of_movies_done)
+    VALUES ("Christian Bale","Batman Begins", 72);
 
-INSERT INTO actor (actor_name, movie_title)
-    VALUES ("Christian Bale","The Dark Knight");
+INSERT INTO actor (actor_name, movie_title, no_of_movies_done)
+    VALUES ("Christian Bale","The Dark Knight", 72);
 
-INSERT INTO actor (actor_name, movie_title)
-    VALUES ("Christian Bale","The Dark Knight Rises");
+INSERT INTO actor (actor_name, movie_title, no_of_movies_done)
+    VALUES ("Christian Bale","The Dark Knight Rises", 72);
 
-INSERT INTO actor (actor_name, movie_title)
-    VALUES ("Christian Bale","Amsterdam");
+INSERT INTO actor (actor_name, movie_title, no_of_movies_done)
+    VALUES ("Christian Bale","Amsterdam", 72);
 
-INSERT INTO actor (actor_name, movie_title)
-    VALUES ("Christian Bale","Ford vs ferrari");
+INSERT INTO actor (actor_name, movie_title, no_of_movies_done)
+    VALUES ("Christian Bale","Ford vs ferrari", 72);
+
+INSERT INTO actor (actor_name, movie_title, no_of_movies_done)
+    VALUES ("Katie Holmes","Batman Begins", 39);
+
+INSERT INTO actor (actor_name, movie_title, no_of_movies_done)
+    VALUES ("Katie Holmes","Go", 39);
+
+INSERT INTO actor (actor_name, movie_title, no_of_movies_done)
+    VALUES ("Jason Bateman","The Gift", 23);
+
+INSERT INTO actor (actor_name, movie_title, no_of_movies_done)
+    VALUES ("Katie Holmes","Alone Together", 39);
+
+INSERT INTO actor (actor_name, movie_title, no_of_movies_done)
+    VALUES ("Michael Caine","The Dark Knight", 85);
+
+INSERT INTO actor (actor_name, movie_title, no_of_movies_done)
+    VALUES ("Michael Caine","Batman Begins", 85);
+
+INSERT INTO actor (actor_name, movie_title, no_of_movies_done)
+    VALUES ("Rachael Wisz","Youth", 64);
+
+
+
 
 
 INSERT INTO movies(movie_title, year_released, mpaa_ratings, studio_info)
     VALUES ("Batman Begins", 2005,"PG-13","Warner Bros.");
+
 INSERT INTO movies(movie_title, year_released, mpaa_ratings, studio_info) 
    VALUES ("The Dark Knight", 2008,"PG-13","Warner Bros.");
+
 INSERT INTO movies(movie_title, year_released, mpaa_ratings, studio_info) 
    VALUES ("The Dark Knight Rises", 2012,"PG-13","Warner Bros.");
 
 INSERT INTO top_cast (movie_id, actor_name,character_name)
     VALUES (1, "Christian Bale", "Bruce Wayne");
+
 INSERT INTO top_cast (movie_id, actor_name,character_name)
     VALUES (1, "Michael Caine", "Alfred");
+
 INSERT INTO top_cast (movie_id, actor_name,character_name)  
     VALUES (1,  "Liam Neeson", "Ras Al Ghul");
+
 INSERT INTO top_cast (movie_id, actor_name,character_name)   
-    VALUES (1,  "Katie Holmes ", "Rachel Dawes");
+    VALUES (1,  "Katie Holmes", "Rachel Dawes");
 
 INSERT INTO top_cast (movie_id, actor_name,character_name)
     VALUES (1, "Gary Oldman", "Commissioner Gordon");
@@ -219,7 +232,14 @@ INSERT INTO top_cast (movie_id, actor_name,character_name)
 .print "Movies"
 .print "======"
 .print ""
-select * from movies;
+
+
+.print "Full Movie Info"
+.print "======"
+.print ""
+select  movies.movie_title, movies.year_released, movies.mpaa_ratings, movies.studio_info, movies.movie_title, top_cast.actor_name, top_cast.character_name 
+from movies inner join top_cast 
+on movies.movie_id = top_cast.movie_id;
 
 -- Prints a header for the cast output
 .print ""
@@ -227,9 +247,16 @@ select * from movies;
 .print "========"
 .print ""
 
-select movies.movie_title, top_cast.actor_name, top_cast.character_name 
-from movies inner join top_cast 
-on movies.movie_id = top_cast.movie_id;
+select * from movies;
 
+-- Prints a header for the actor info such as name and no of movies done so far
+.print ""
+.print "Actor info"
+.print "========"
+.print ""
 
-
+SELECT top_cast.movie_id, top_cast.actor_name, actor.no_of_movies_done
+FROM top_cast INNER JOIN actor 
+ON actor.actor_name = top_cast.actor_name
+GROUP BY actor.actor_name
+;
