@@ -109,6 +109,7 @@
 -- Use hard-coded foreign key IDs when necessary
 -- TODO!
 
+-- Creation of various tables for KMDB database
 
 drop table if exists movies;
 create table movies (
@@ -133,6 +134,8 @@ create table actor (
     movie_title text,
     no_of_movies_done integer
 );
+
+-- Insertion of data into table 'actor'
 
 INSERT INTO actor (actor_name, movie_title, no_of_movies_done)
     VALUES ("Christian Bale","Batman Begins", 72);
@@ -171,8 +174,7 @@ INSERT INTO actor (actor_name, movie_title, no_of_movies_done)
     VALUES ("Rachael Wisz","Youth", 64);
 
 
-
-
+-- Insertion of data into table 'movies'
 
 INSERT INTO movies(movie_title, year_released, mpaa_ratings, studio_info)
     VALUES ("Batman Begins", 2005,"PG-13","Warner Bros.");
@@ -182,6 +184,9 @@ INSERT INTO movies(movie_title, year_released, mpaa_ratings, studio_info)
 
 INSERT INTO movies(movie_title, year_released, mpaa_ratings, studio_info) 
    VALUES ("The Dark Knight Rises", 2012,"PG-13","Warner Bros.");
+
+
+-- Insertion of data into table 'top_cast'
 
 INSERT INTO top_cast (movie_id, actor_name,character_name)
     VALUES (1, "Christian Bale", "Bruce Wayne");
@@ -228,35 +233,32 @@ INSERT INTO top_cast (movie_id, actor_name,character_name)
 INSERT INTO top_cast (movie_id, actor_name,character_name)
     VALUES (3, "Anne Hathaway", "Selina Kyle");
 
--- Prints a header for the movies output
+
+-- Prints a header for the movies short output
+.print ""
 .print "Movies"
 .print "======"
 .print ""
+select * from movies;
 
 
-.print "Full Movie Info"
-.print "======"
+-- Prints a header for full info of movies acted by top cast
+.print ""
+.print "Top Cast"
+.print "========"
 .print ""
 select  movies.movie_title, movies.year_released, movies.mpaa_ratings, movies.studio_info, movies.movie_title, top_cast.actor_name, top_cast.character_name 
 from movies inner join top_cast 
 on movies.movie_id = top_cast.movie_id;
 
--- Prints a header for the cast output
-.print ""
-.print "Top Cast"
-.print "========"
-.print ""
-
-select * from movies;
 
 -- Prints a header for the actor info such as name and no of movies done so far
 .print ""
 .print "Actor info"
-.print "========"
+.print "=========="
 .print ""
 
 SELECT top_cast.movie_id, top_cast.actor_name, actor.no_of_movies_done
 FROM top_cast INNER JOIN actor 
 ON actor.actor_name = top_cast.actor_name
-GROUP BY actor.actor_name
-;
+GROUP BY actor.actor_name;
